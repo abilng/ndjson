@@ -1,0 +1,3 @@
+{"name":"CAR1","price":"10000","colors":["GRAY","BLACK","WHITE"],"promoDate":"09/05/2014","carModel":2014,"tom":"jerry","foo":"bar"}
+{"name":"CAR2","price":"20000","colors":["RED","BLACK","WHITE"],"promoDate":"09/78/2012","carModel":2012,"tom":"jerry","foo":"bar1"}
+{"name":"CAR3","price":"30000","colors":["SILVER","BLACK","WHITE"],"promoDate":"09/05/2018","carModel":2018,"tom":"jerry","foo":"bar3"}
