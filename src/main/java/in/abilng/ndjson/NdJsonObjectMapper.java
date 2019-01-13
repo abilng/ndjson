@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -81,6 +82,8 @@ public class NdJsonObjectMapper {
 	 * 
 	 * @param module
 	 *            Module to register
+	 * 
+	 * @return NdJsonObjectMapper
 	 */
 	public NdJsonObjectMapper registerModule(Module module) {
 		objectMapper.registerModule(module);
@@ -97,6 +100,7 @@ public class NdJsonObjectMapper {
 	 * }
 	 * </pre>
 	 * 
+	 * @return NdJsonObjectMapper
 	 */
 	public NdJsonObjectMapper registerModules(Module... modules) {
 		for (Module module : modules) {
@@ -121,7 +125,7 @@ public class NdJsonObjectMapper {
 	 *             for result type (or has other mismatch issues)
 	 */
 	public <T> Stream<T> readValue(InputStream inputStream, Class<T> valueType)
-			throws NdJsonRunTimeException {
+			throws NdJsonRunTimeException, JsonParseException, JsonMappingException {
 		Objects.requireNonNull(inputStream, "InputStream cannot be null");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
 		return reader
@@ -145,23 +149,42 @@ public class NdJsonObjectMapper {
 	 *             if the input JSON structure does not match structure expected
 	 *             for result type (or has other mismatch issues)
 	 */
-	public <T> List<T> readValueAsList(InputStream src, Class<T> valueType) throws NdJsonRunTimeException {
+	public <T> List<T> readValueAsList(InputStream src, Class<T> valueType)
+			throws NdJsonRunTimeException, JsonParseException, JsonMappingException {
 		return readValue(src, valueType).collect(Collectors.toList());
 	}
 
 	/**
 	 * Method that can be used to serialize any Java Stream of value as JSON
 	 * output, written to OutputStream provided.
+	 * 
+	 * @param out
+	 *            Output Stream
+	 * @param value
+	 *            Stream of Java Objects
+	 * @throws NdJsonRunTimeException
+	 * @throws JsonGenerationException
+	 * @throws JsonMappingException
 	 */
-	public void writeValue(OutputStream out, Stream<Object> value) throws NdJsonRunTimeException {
+	public void writeValue(OutputStream out, Stream<Object> value)
+			throws NdJsonRunTimeException, JsonGenerationException, JsonMappingException {
 		value.forEach(val -> objectToJson(out, val));
 	}
 
 	/**
 	 * Method that can be used to serialize any Java List of value as JSON
 	 * output, written to OutputStream provided.
+	 * 
+	 * @param out
+	 *            Output Stream
+	 * @param value
+	 *            List of Java Objects
+	 * @throws NdJsonRunTimeException
+	 * @throws JsonGenerationException
+	 * @throws JsonMappingException
 	 */
-	public void writeValue(OutputStream out, List<Object> value) throws NdJsonRunTimeException {
+	public void writeValue(OutputStream out, List<Object> value)
+			throws NdJsonRunTimeException, JsonGenerationException, JsonMappingException {
 		value.forEach(val -> objectToJson(out, val));
 	}
 
