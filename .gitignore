@@ -15,5 +15,6 @@ buildNumber.properties
 .classpath
 .settings/
 .project
+
 # Java Doc
-doc/
+#doc/
