@@ -16,6 +16,18 @@
 		<developerConnection>scm:git:git@github.com:abilng/ndjson.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
+	
+	<developers>
+		<developer>
+			<id>abilng</id>
+			<name>Abil George</name>
+			<email>mail@abilng.in</email>
+			<roles>
+				<role>Project-Administrator</role>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
 
 	<licenses>
 		<license>
