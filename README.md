@@ -9,7 +9,7 @@ Uses [Jackson JSON parser](https://github.com/FasterXML/jackson)
 
 ## Usage
 
-**deserialization**
+**Deserialization**
 
 ```java
     NdJsonObjectMapper ndJsonObjectMapper = new NdJsonObjectMapper();
@@ -17,7 +17,7 @@ Uses [Jackson JSON parser](https://github.com/FasterXML/jackson)
     Stream<Car> readValue = ndJsonObjectMapper.readValue(is, Car.class);
 ```
 
-**serialization**
+**Serialization**
 
 ```java
     NdJsonObjectMapper ndJsonObjectMapper = new NdJsonObjectMapper();
