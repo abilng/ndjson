@@ -4,7 +4,7 @@
 
 	<groupId>in.abilng</groupId>
 	<artifactId>ndjson</artifactId>
-	<version>0.2</version>
+	<version>0.3-SNAPSHOT</version>
 
 	<name>ndjson</name>
 	<description>For NDJSON Parsing</description>
@@ -14,7 +14,7 @@
 		<url>https://github.com/abilng/ndjson</url>
 		<connection>scm:git:git://github.com/abilng/ndjson.git</connection>
 		<developerConnection>scm:git:git@github.com:abilng/ndjson.git</developerConnection>
-		<tag>ndjson-0.2</tag>
+		<tag>ndjson-0.1</tag>
 	</scm>
 
 	<developers>
