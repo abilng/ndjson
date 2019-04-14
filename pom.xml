@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>in.abilng</groupId>
 	<artifactId>ndjson</artifactId>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.2</version>
 
 	<name>ndjson</name>
 	<description>For NDJSON Parsing</description>
@@ -15,7 +14,7 @@
 		<url>https://github.com/abilng/ndjson</url>
 		<connection>scm:git:git://github.com/abilng/ndjson.git</connection>
 		<developerConnection>scm:git:git@github.com:abilng/ndjson.git</developerConnection>
-		<tag>ndjson-0.1</tag>
+		<tag>ndjson-0.2</tag>
 	</scm>
 
 	<developers>
