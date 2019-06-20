@@ -41,7 +41,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<version.jackson>2.9.8</version.jackson>
+		<version.jackson>2.9.9</version.jackson>
 		<version.test.junit>4.11</version.test.junit>
 	</properties>
 
