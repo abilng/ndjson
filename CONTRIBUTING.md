@@ -10,5 +10,5 @@ https://github.com/abilng/ndjson/issues
 
 If it's a known issue, add :+1: on bug description 
 
-If it is not in the issue list, please create a issue
+If it is not in the issue list, please create a issue [here](https://github.com/abilng/ndjson/issues/new?template=bug_report.md)
 
