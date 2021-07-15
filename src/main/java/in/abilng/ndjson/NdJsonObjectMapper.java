@@ -44,7 +44,7 @@ public class NdJsonObjectMapper {
      * Jackson-specific annotations), but does not support JAXB annotations.
      */
     public NdJsonObjectMapper() {
-        configureMapper();
+        this(null, null, null);
     }
 
     /**
@@ -55,18 +55,7 @@ public class NdJsonObjectMapper {
      *           will be constructed
      */
     public NdJsonObjectMapper(JsonFactory jf) {
-        objectMapper = new ObjectMapper(jf);
-        configureMapper();
-    }
-
-    private void configureMapper() {
-        if (objectMapper == null) {
-            objectMapper = new ObjectMapper();
-        }
-        objectMapper = objectMapper
-                .configure(SerializationFeature.CLOSE_CLOSEABLE, false)
-                .disable(SerializationFeature.CLOSE_CLOSEABLE)
-                .disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
+        this(jf, null, null);
     }
 
     /**
@@ -83,8 +72,10 @@ public class NdJsonObjectMapper {
      *           {@link DeserializationContext}
      */
     public NdJsonObjectMapper(JsonFactory jf, DefaultSerializerProvider sp, DefaultDeserializationContext dc) {
-        objectMapper = new ObjectMapper(jf, sp, dc);
-        configureMapper();
+        objectMapper = new ObjectMapper(jf, sp, dc)
+                .configure(SerializationFeature.CLOSE_CLOSEABLE, false)
+                .disable(SerializationFeature.CLOSE_CLOSEABLE)
+                .disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
     }
 
     /**
