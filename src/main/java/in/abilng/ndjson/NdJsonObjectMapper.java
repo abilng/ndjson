@@ -1,6 +1,7 @@
 package in.abilng.ndjson;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -18,8 +19,6 @@ import com.fasterxml.jackson.databind.ser.SerializerFactory;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -119,12 +118,16 @@ public class NdJsonObjectMapper {
      * @param valueType Class of Object
      * @param <T>       The expected class of the Object.
      * @return Stream of Objects
-     * @throws IOException if a low-level I/O problem (unexpected end-of-input, network
-     *                     error) occurs (passed through as-is without additional
-     *                     wrapping
+     * @throws IOException          if a low-level I/O problem (unexpected end-of-input, network
+     *                              error) occurs (passed through as-is without additional
+     *                              wrapping
+     * @throws JsonParseException   if underlying input contains invalid content of type
+     *                              {@link JsonParser} supports (JSON for default case)
+     * @throws JsonMappingException if the input JSON structure does not match structure expected
+     *                              for result type (or has other mismatch issues)
      */
     public <T> Stream<T> readValue(InputStream in, Class<T> valueType)
-            throws IOException {
+            throws IOException, JsonParseException, JsonMappingException {
         Objects.requireNonNull(in, "InputStream cannot be null");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
         try {
@@ -166,12 +169,15 @@ public class NdJsonObjectMapper {
      *
      * @param out   Output Stream
      * @param value Stream of Java Objects
-     * @throws IOException if a low-level I/O problem (unexpected end-of-input, network
-     *                     error) occurs (passed through as-is without additional
-     *                     wrapping
+     * @throws IOException             if a low-level I/O problem (unexpected end-of-input, network
+     *                                 error) occurs (passed through as-is without additional
+     *                                 wrapping
+     * @throws JsonGenerationException Exception type for exceptions during JSON writing, such as
+     *                                 trying to output content in wrong context
+     * @throws JsonMappingException    if any fatal problems with mapping of content.
      */
     public void writeValue(OutputStream out, Stream<Object> value)
-            throws IOException {
+            throws IOException, JsonGenerationException, JsonMappingException {
         Objects.requireNonNull(out, "OutPutStream cannot be null");
         try {
             value.forEach(val -> objectToJson(out, val));
@@ -186,12 +192,15 @@ public class NdJsonObjectMapper {
      *
      * @param out   Output Stream
      * @param value List of Java Objects
-     * @throws IOException if a low-level I/O problem (unexpected end-of-input, network
-     *                     error) occurs (passed through as-is without additional
-     *                     wrapping
+     * @throws IOException             if a low-level I/O problem (unexpected end-of-input, network
+     *                                 error) occurs (passed through as-is without additional
+     *                                 wrapping
+     * @throws JsonGenerationException Exception type for exceptions during JSON writing, such as
+     *                                 trying to output content in wrong context
+     * @throws JsonMappingException    if any fatal problems with mapping of content.
      */
-    public void writeValue(OutputStream out, List<?> value)
-            throws IOException {
+    public void writeValue(OutputStream out, List<Object> value)
+            throws IOException, JsonGenerationException, JsonMappingException {
         Objects.requireNonNull(out, "OutPutStream cannot be null");
         try {
             value.forEach(val -> objectToJson(out, val));
@@ -200,20 +209,11 @@ public class NdJsonObjectMapper {
         }
     }
 
-    public void writeValue(File file, List<?> values)
-            throws IOException {
-        Objects.requireNonNull(file, "File cannot be null");
-        try (OutputStream out = new FileOutputStream(file)) {
-            writeValue(out, values);
-        } catch (NdJsonRunTimeIOException e) {
-            throw e.getCause();
-        }
-    }
 
     private void objectToJson(OutputStream out, Object val) {
         try {
             objectMapper.writeValue(out, val);
-            out.write("\n".getBytes(Charset.defaultCharset()));
+            out.write("\r\n".getBytes(Charset.defaultCharset()));
         } catch (IOException e) {
             throw new NdJsonRunTimeIOException(e);
         }

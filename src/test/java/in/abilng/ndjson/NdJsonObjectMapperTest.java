@@ -27,7 +27,7 @@ public class NdJsonObjectMapperTest {
     }
 
     @Test
-    public void testReadValueFromInputStream() throws Exception {
+    public void testReadValueFromImputStream() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("test-car.json").getFile());
         InputStream is = new FileInputStream(file);
@@ -40,7 +40,7 @@ public class NdJsonObjectMapperTest {
     }
 
     @Test
-    public void testReadValueAsListFromInputStream() throws Exception {
+    public void testReadValueAsListFromImputStream() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("test-car.json").getFile());
         InputStream is = new FileInputStream(file);

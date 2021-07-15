@@ -16,7 +16,11 @@ buildNumber.properties
 .settings/
 .project
 
+#intellij
+.idea/
+*.iml
+
 # Java Doc
 #doc/
-/.idea/
-*.iml
+
+
