@@ -1,6 +1,6 @@
 # ndjson
 
-[![Build Status](https://travis-ci.org/abilng/ndjson.svg?branch=master)](https://travis-ci.org/abilng/ndjson)
+[![Build Status](https://github.com/abilng/ndjson/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/abilng/ndjson/actions/workflows/maven.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/in.abilng/ndjson.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22in.abilng%22%20AND%20a:%22ndjson%22)
 
 Java library for creating and parsing [ND-JSON](http://ndjson.org/)
