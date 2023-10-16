@@ -1,0 +1,40 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Publish package to the GitHub Packages
+on:
+  push:
+    tags: 
+      - ndjson-*
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Java for publishing to GitHub Packages
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'zulu'
+      - name: Publish to GitHub Packages
+        run: mvn --batch-mode deploy --file pom.xml -DGH_RELEASE=true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Java for publishing to Maven Central Repository [Skip]
+        if: false
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+      - name: Publish to the Maven Central Repository [Skip]
+        if: false
+        run: mvn --batch-mode deploy --file pom.xml -P ossrh-release
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
