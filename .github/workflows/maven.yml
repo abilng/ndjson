@@ -26,7 +26,13 @@ jobs:
         server-password: MAVEN_PASSWORD
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: spotbugs
+      run: mvn -B verify spotbugs:spotbugs --file pom.xml
+    - uses: jwgmeligmeyling/spotbugs-github-action@master
+      with:
+        path: '**/spotbugsXml.xml'
     - name: Publish snapshot to OSS
+      if: ${{ github.ref == 'ref/head/master' }}
       run: mvn --batch-mode deploy --file pom.xml
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
