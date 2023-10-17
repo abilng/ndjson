@@ -1,14 +1,14 @@
 package in.abilng.ndjson;
 
 import in.abilng.ndjson.test.pojo.Car;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +21,7 @@ public class NdJsonObjectMapperTest {
 
     private NdJsonObjectMapper ndJsonObjectMapper;
 
-    @Before
+    @BeforeEach
     public void init() {
         ndJsonObjectMapper = new NdJsonObjectMapper();
     }
@@ -29,8 +29,8 @@ public class NdJsonObjectMapperTest {
     @Test
     public void testReadValueFromInputStream() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("test-car.json").getFile());
-        InputStream is = new FileInputStream(file);
+        Path path = Paths.get(classLoader.getResource("test-car.json").toURI());
+        InputStream is = Files.newInputStream(path);
         Stream<Car> readValue = ndJsonObjectMapper.readValue(is, Car.class);
         List<Car> list = readValue.collect(Collectors.toList());
         assertThat(list.size(), is(3));
@@ -42,8 +42,8 @@ public class NdJsonObjectMapperTest {
     @Test
     public void testReadValueAsListFromInputStream() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("test-car.json").getFile());
-        InputStream is = new FileInputStream(file);
+        Path path = Paths.get(classLoader.getResource("test-car.json").toURI());
+        InputStream is = Files.newInputStream(path);
         List<Car> list = ndJsonObjectMapper.readValueAsList(is, Car.class);
         assertThat(list.size(), is(3));
         assertThat(list.get(0).getName(), is("CAR1"));
@@ -54,14 +54,14 @@ public class NdJsonObjectMapperTest {
     @Test
     public void testWriteValuesToInputStream() throws Exception {
         OutputStream out = null;
-        FileInputStream in = null;
+        InputStream in = null;
         try {
-            File file = File.createTempFile("test-write-list", ".json");
+            Path path = Files.createTempFile("test-write-list", ".json");
             List<Object> values = Arrays.asList(new Car("C1"), new Car("C2"));
-            out = new FileOutputStream(file);
+            out = Files.newOutputStream(path);
             ndJsonObjectMapper.writeValue(out, values);
 
-            in = new FileInputStream(file);
+            in = Files.newInputStream(path);
             List<Car> list = ndJsonObjectMapper.readValueAsList(in, Car.class);
             assertThat(list.size(), is(2));
             assertThat(list.get(0).getName(), is("C1"));
