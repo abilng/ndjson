@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.deser.DefaultDeserializationContext;
 import com.fasterxml.jackson.databind.ser.BeanSerializerFactory;
 import com.fasterxml.jackson.databind.ser.DefaultSerializerProvider;
 import com.fasterxml.jackson.databind.ser.SerializerFactory;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +31,7 @@ import java.util.stream.Stream;
 
 public class NdJsonObjectMapper {
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     /**
      * Default constructor, which will construct the default {@link JsonFactory}
@@ -133,7 +132,7 @@ public class NdJsonObjectMapper {
         try {
             return reader
                     .lines()
-                    .filter(StringUtils::isNotEmpty)
+                    .filter(NdJsonObjectMapper::isNotEmpty)
                     .map(json -> jsonToObject(json, valueType));
         } catch (NdJsonRunTimeIOException e) {
             throw e.getCause();
@@ -225,6 +224,16 @@ public class NdJsonObjectMapper {
         } catch (IOException e) {
             throw new NdJsonRunTimeIOException(e);
         }
+    }
+
+    /**
+     * Checks if a String is empty ("") or null.
+     *
+     * @param str  the String to check, may be null
+     * @return {@code true} if the String is empty or null
+     */
+    private static boolean isNotEmpty(final String str) {
+        return str != null && !str.isEmpty();
     }
 
 }
