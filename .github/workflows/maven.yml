@@ -22,6 +22,8 @@ jobs:
         java-package: jdk
         cache: 'maven'
         server-id: central
+        server-username: CENTRAL_USERNAME
+        server-password: CENTRAL_PASSWORD
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: spotbugs
@@ -31,7 +33,7 @@ jobs:
         path: '**/spotbugsXml.xml'
     - name: Publish snapshot to OSS
       if: ${{ github.ref == 'refs/heads/master' }}
-      run: mvn --batch-mode deploy --file pom.xml -s central-settings.xml
+      run: mvn --batch-mode deploy --file pom.xml
       env:
-        CENTRAL_TOKEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
-        CENTRAL_TOKEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
+        CENTRAL_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
+        CENTRAL_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
