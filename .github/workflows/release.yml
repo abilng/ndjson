@@ -22,18 +22,19 @@ jobs:
         run: mvn --batch-mode deploy --file pom.xml -DGH_RELEASE=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Set up Java for publishing to Maven Central Repository [Skip]
-        if: false
+      - name: Set up Java for publishing to Maven Central Repository
         uses: actions/setup-java@v3
         with:
           java-version: '8'
           distribution: 'zulu'
-          server-id: ossrh
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_PASSWORD
-      - name: Publish to the Maven Central Repository [Skip]
-        if: false
-        run: mvn --batch-mode deploy --file pom.xml -P ossrh-release
+          server-id: central
+          server-username: CENTRAL_USERNAME
+          server-password: CENTRAL_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
+      - name: Publish to the Maven Central Repository
+        run: mvn --batch-mode deploy --file pom.xml -P central-release
         env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

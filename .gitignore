@@ -23,4 +23,6 @@ buildNumber.properties
 # Java Doc
 #doc/
 
+# Local Settings
+local-settings.xml
 
