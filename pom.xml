@@ -4,7 +4,7 @@
 
 	<groupId>in.abilng</groupId>
 	<artifactId>ndjson</artifactId>
-	<version>1.0.4-SNAPSHOT</version>
+	<version>1.0.4</version>
 
 	<name>ndjson</name>
 	<description>Java library for creating and parsing ND-JSON/JSONL</description>
@@ -14,7 +14,7 @@
 		<url>https://github.com/abilng/ndjson</url>
 		<connection>scm:git:git://github.com/abilng/ndjson.git</connection>
 		<developerConnection>scm:git:git@github.com:abilng/ndjson.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>ndjson-1.0.4</tag>
 	</scm>
 
 	<developers>
